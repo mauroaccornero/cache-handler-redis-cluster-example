@@ -1,0 +1,80 @@
+services:
+  redis-1:
+    image: redis
+    command: ["redis-server","/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/node-1/data:/data
+      - ./redis/node-1/conf/redis.conf:/etc/redis/redis.conf
+    ports:
+      - 6371:6379
+      - 16371:16379
+    networks:
+      redis_network:
+        ipv4_address: 172.38.0.11
+  redis-2:
+    image: redis
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/node-2/data:/data
+      - ./redis/node-2/conf/redis.conf:/etc/redis/redis.conf
+    ports:
+      - "6372:6379"
+      - 16372:16379
+    networks:
+      redis_network:
+        ipv4_address: 172.38.0.12
+  redis-3:
+    image: redis
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/node-3/data:/data
+      - ./redis/node-3/conf/redis.conf:/etc/redis/redis.conf
+    ports:
+      - "6373:6379"
+      - 16373:16379
+    networks:
+      redis_network:
+        ipv4_address: 172.38.0.13
+  redis-4:
+    image: redis
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/node-4/data:/data
+      - ./redis/node-4/conf/redis.conf:/etc/redis/redis.conf
+    ports:
+      - "6374:6379"
+      - 16374:16379
+    networks:
+      redis_network:
+        ipv4_address: 172.38.0.14
+  redis-5:
+    image: redis
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/node-5/data:/data
+      - ./redis/node-5/conf/redis.conf:/etc/redis/redis.conf
+    ports:
+      - "6375:6379"
+      - 16375:16379
+    networks:
+      redis_network:
+        ipv4_address: 172.38.0.15
+  redis-6:
+    image: redis
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/node-6/data:/data
+      - ./redis/node-6/conf/redis.conf:/etc/redis/redis.conf
+    ports:
+      - "6376:6379"
+      - "16376:16379"
+    networks:
+      redis_network:
+        ipv4_address: 172.38.0.16
+networks:
+  redis_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.38.0.0/16
+          gateway: 172.38.0.1
