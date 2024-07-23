@@ -1,8 +1,7 @@
 const { CacheHandler } = require("@neshca/cache-handler");
+const createClusterHandler = require("@neshca/cache-handler/experimental-redis-cluster").default;
 const { createCluster } = require("redis");
 const { PHASE_PRODUCTION_BUILD } = require("next/constants");
-
-const customRedisClusterHandler =  require("./custom-cache-handler");
 
 /* from https://caching-tools.github.io/next-shared-cache/redis */
 CacheHandler.onCreation(async () => {
@@ -77,7 +76,7 @@ CacheHandler.onCreation(async () => {
   let redisHandler = null;
 
   if (cluster) {
-    redisHandler = customRedisClusterHandler(
+    redisHandler = createClusterHandler(
     {keyPrefix:"my-app-cache:",sharedTagsKey:"_sharedTags_", timeoutMs: 1000, cluster})
   }
 
