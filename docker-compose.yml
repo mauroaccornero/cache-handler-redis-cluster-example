@@ -1,7 +1,7 @@
 services:
   redis-1:
     image: redis
-    command: ["redis-server","/etc/redis/redis.conf"]
+    command: ["redis-server", "/etc/redis/redis.conf"]
     volumes:
       - ./redis/node-1/data:/data
       - ./redis/node-1/conf/redis.conf:/etc/redis/redis.conf
@@ -71,6 +71,22 @@ services:
     networks:
       redis_network:
         ipv4_address: 172.38.0.16
+  cluster-creator:
+    image: redis
+    command: redis-cli --cluster create 172.38.0.11:6379 172.38.0.12:6379 172.38.0.13:6379 172.38.0.14:6379 172.38.0.15:6379 172.38.0.16:6379 --cluster-replicas 1 --cluster-yes
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+      - redis-4
+      - redis-5
+      - redis-6
+  redis-insight:
+    image: redis/redisinsight:latest
+    ports:
+      - "5540:5540"
+    depends_on:
+      - cluster-creator
 networks:
   redis_network:
     driver: bridge
