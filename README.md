@@ -1,52 +1,81 @@
 # Next.js Redis Cluster Cache Integration Example
 
-Run docker compose to start redis locally
+This example demonstrates how to integrate a Redis Cluster Cache with a Next.js application.
 
-```
+## Prerequisites
+
+- **Debian-based OS**: Ensure your operating system is Debian-based (e.g., Ubuntu, Debian).
+- **Docker**: Ensure Docker is installed on your machine.
+- **Node.js**: Ensure Node.js (and npm) is installed on your machine.
+
+### Windows and MacOS Users
+
+MacOS and Windows users can use [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) to run the example in a containerized environment. This project includes a `devcontainer.json` file that defines the container image and the necessary dependencies.
+
+## Getting Started
+
+### Step 1: Start Redis Using Docker Compose
+
+To start Redis locally, run:
+
+```sh
 docker-compose up -d
 ```
 
-open redis-1 terminal and create the cluster
+### Step 2: Install Project Dependencies
 
-```
-redis-cli --cluster create 172.38.0.11:6379 172.38.0.12:6379 172.38.0.13:6379 172.38.0.14:6379 172.38.0.15:6379 172.38.0.16:6379 --cluster-replicas 1
-```
+Install the necessary Next.js dependencies:
 
-type "yes" to apply the configuration.
-
-verify that the cluster was created
-
-```
-redis-cli -c
-cluster nodes
-```
-
-install next.js dependencies for the project
-
-```
+```sh
 npm i
 ```
 
-build next.js (will not use custom redis cache handler during build)
+### Step 3: Build the Next.js Application
 
-```
+Build the Next.js application. Note that the custom Redis cache handler will not be used during the build process:
+
+```sh
 npm run build
 ```
 
-start next.js app
+### Step 4: Start the Next.js Application
 
-```
+Start the Next.js application:
+
+```sh
 npm run start
 ```
 
-navigate to the local homepage [http://localhost:3000/cet](http://localhost:3000/cet) 
+### Step 5: Access the Application
 
-to remove logs, remove NEXT_PRIVATE_DEBUG_CACHE=1 from package.json
+Navigate to the local homepage in your browser:
 
-keep in mind that redis data will be stored in redis/node-X/data
+http://localhost:3000
 
-to flush all the redis cluster use 
+Then navigate through the different timezones to see the cache in action.
 
+## Logging Configuration
+
+To remove logs, edit the package.json file by removing `NEXT_PRIVATE_DEBUG_CACHE=1`.
+
+## Redis Cluster Management
+
+### Redis Data Storage
+
+Redis data will be stored in `redis/node-X/data`.
+
+### Flushing the Redis Cluster
+
+To flush all data from the Redis cluster, use the following commands:
+
+Enter the Docker container:
+
+```sh
+docker exec -it cache-handler-redis-cluster-example-redis-1-1 /bin/bash
 ```
+
+Flush all Redis nodes:
+
+```sh
 redis-cli --cluster call --cluster-only-masters 172.38.0.11:6379 FLUSHALL
 ```

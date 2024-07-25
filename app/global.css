@@ -18,7 +18,7 @@ html {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
+  margin: 20px 0;
   padding: 20px;
   max-width: 600px;
   text-align: center;
@@ -67,17 +67,15 @@ html {
   cursor: not-allowed;
 }
 
-.footer,
-.header {
+.footer {
   padding: 10px;
-  position: relative;
-  place-items: center;
-  grid-auto-flow: column;
+  position: fixed;
   bottom: 0;
-  grid-gap: 20px;
-  width: 100%;
-  display: grid;
+  right: 0;
+  width: calc(100% - 220px);
+  display: flex;
   justify-content: center;
+  background-color: #f4f4f4;
 }
 
 .link {
@@ -90,13 +88,48 @@ html {
   color: #07c;
 }
 
-@media (max-width: 768px) {
-  .widget {
-    width: 90%;
-    margin: 20px auto;
-  }
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  overflow-y: auto;
+  background-color: #f8f8f8;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
 
+.sidebar-link {
+  display: block;
+  padding: 10px 0;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sidebar-link:hover {
+  color: #008cba;
+}
+
+.main-content {
+  margin-left: 220px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .main-content {
+    margin-left: 0;
+  }
   .footer {
-    padding: 20px;
+    width: 100%;
+    position: relative;
   }
 }
